@@ -1,7 +1,4 @@
-import { type SchemaTypeDefinition } from 'sanity'
-
-
-export const schema = {
+const schema = {
   name: 'resource',
   title: 'Resource',
   type: 'document',
