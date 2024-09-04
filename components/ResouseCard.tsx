@@ -18,7 +18,7 @@ interface Props {
 
 const ResouseCard = ({ id, title, image, downloadNumber }: Props) => {
   return (
-    <Card className="w-full max-w-fit border-0 !bg-transparent sm:max-w-[365px">
+    <Card className="w-full max-w-fit border-0 !bg-transparent sm:max-w-[365px]">
       <Link href={`/resource/${id}`}>
         <CardHeader className="flex-center flex-col gap-2.5 !p-0">
             <div className="h-fit w-full">

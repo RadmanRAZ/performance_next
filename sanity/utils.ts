@@ -30,6 +30,7 @@ export function buildQuery(params: BuildQueryParams) {
     : `${conditions[0]}][${offset}...${limit}]`;
 }
 
+
 interface UrlQueryParams {
   params: string;
   key?: string;
@@ -39,14 +40,18 @@ interface UrlQueryParams {
 
 export function formUrlQuery({ params, key, value, keysToRemove }: UrlQueryParams) {
   const currentUrl = qs.parse(params);
+  console.log('start')
 
   if(keysToRemove) {
     keysToRemove.forEach((keyToRemove) => {
+      console.log('mmmm')
       delete currentUrl[keyToRemove];
     })
   } else if(key && value) {
+    console.log("heelo")
     currentUrl[key] = value;
   }
+  
 
   return qs.stringifyUrl(
     { url: window.location.pathname, query: currentUrl },

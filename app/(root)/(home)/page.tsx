@@ -1,13 +1,19 @@
 import Filters from '@/components/Filters'
+import Header from '@/components/Header'
 import ResouseCard from '@/components/ResouseCard'
 import SearchForm from '@/components/SearchForm'
 import { getResources } from '@/sanity/actions'
 import React from 'react'
 
-const Page = async () => {
+interface Props{
+  searchParams : {[key : string] : string}
+}
+
+const Page = async ({searchParams}:Props) => {
+  console.log("this is search params" , searchParams)
   const resourses = await getResources({
-    query : "",
-    category : "",
+    query : searchParams?.query || "",
+    category : searchParams?.category || "", 
     page : "1"
   })
   console.log(resourses)
@@ -23,7 +29,7 @@ const Page = async () => {
       </section>
       <Filters/> 
       <section className='flex-center mt-6 w-full flex-col sm:mt-20'>
-        Header
+        <Header/>
         <div className='mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start'>
           {resourses?.length > 0 ? (
             resourses.map((resourse:any)=>
