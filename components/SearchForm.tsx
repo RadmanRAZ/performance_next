@@ -4,7 +4,6 @@ import React, { useEffect, useState } from 'react'
 import { Input } from './ui/input'
 import { formUrlQuery } from '@/sanity/utils'
 import { useRouter, useSearchParams } from 'next/navigation'
-import { route } from 'sanity/router'
 
 const SearchForm = () => {
   const [search, setSearch] = useState('')

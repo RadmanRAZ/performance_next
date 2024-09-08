@@ -2,7 +2,7 @@ import Filters from '@/components/Filters'
 import Header from '@/components/Header'
 import ResouseCard from '@/components/ResouseCard'
 import SearchForm from '@/components/SearchForm'
-import { getResources } from '@/sanity/actions'
+import { getResources, getResourcesPlaylist } from '@/sanity/actions'
 import React from 'react'
 
 interface Props{
@@ -16,7 +16,11 @@ const Page = async ({searchParams}:Props) => {
     category : searchParams?.category || "", 
     page : "1"
   })
-  console.log(resourses)
+
+  const resoursesPlaylist = await getResourcesPlaylist()
+
+
+
   return (
     <main className='flex-center paddings mx-auto w-full max-w-screen-2xl flex-col'>
       <section className='nav-padding w-full'>
@@ -28,8 +32,12 @@ const Page = async ({searchParams}:Props) => {
 
       </section>
       <Filters/> 
-      <section className='flex-center mt-6 w-full flex-col sm:mt-20'>
-        <Header/>
+      {(searchParams?.query || searchParams?.category) &&(<section className='flex-center mt-6 w-full flex-col sm:mt-20'>
+        <Header  
+          title = "Resources"
+          query = {searchParams?.query || ''}
+          category = {searchParams?.category || ''}
+        />
         <div className='mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start'>
           {resourses?.length > 0 ? (
             resourses.map((resourse:any)=>
@@ -39,6 +47,7 @@ const Page = async ({searchParams}:Props) => {
                 id = {resourse.id}
                 image = {resourse.image}
                 downloadNumber = {resourse.views}
+                downloadLink={resourse.downloadLink}
               />
             )
           ):(
@@ -47,7 +56,29 @@ const Page = async ({searchParams}:Props) => {
             </p>
           )}
         </div>
-      </section>
+      </section>)}
+      {
+        resoursesPlaylist.map((item:any)=>(
+          <section key={item._id} className='flex-center mt-6 w-full flex-col sm:mt-20'  >
+            <h1 className='heading3 self-start text-white'>
+              {item.title}
+            </h1>
+            <div className='mt-12 flex w-full flex-wrap justify-center gap-16 sm:justify-start' >
+              { item.resources.map((resourse:any)=>
+              <ResouseCard 
+                key={resourse._id}
+                title = {resourse.title}
+                id = {resourse.id}
+                image = {resourse.image}
+                downloadNumber = {resourse.views}
+                downloadLink={resourse.downloadLink}
+              />
+            )}
+            </div>
+          </section>
+        ))
+      }
+      
 
     </main>
   )
